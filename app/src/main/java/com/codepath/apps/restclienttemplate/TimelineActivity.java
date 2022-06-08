@@ -51,9 +51,9 @@ public class TimelineActivity extends AppCompatActivity {
         // Initialize the list of tweets and adapter
         tweets = new ArrayList<>();
         adapter = new TweetsAdapter(this, tweets);
+        // Recycler view setup: layout manager and adapter
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         rvTweets.setAdapter(adapter);
-        // Recycler view setup: layout manager and adapter
 
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
@@ -118,9 +118,14 @@ public class TimelineActivity extends AppCompatActivity {
     }
      */
 
+    /**
+     * Inflates the menu
+     * Adds items to the action bar if it is present.
+     * @param menu
+     * @return Menu with all menu options
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }

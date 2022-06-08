@@ -16,13 +16,14 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp" />
 
+<!--    TODO: button covered by swipe refresh layout. -->
     <Button
         android:id="@+id/ivLogOutbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:onClick="onLogoutButton"
+        android:onClick="onLogout"
         android:text="Log Out"
         tools:ignore="OnClick" />
 

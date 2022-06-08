@@ -26,14 +26,24 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         this.tweets = tweets;
     }
 
-    // For each row, inflate the layout
+    /**
+     * For each row, inflates the layout
+     * @param parent parent View to inflate
+     * @param viewType
+     * @return updated View
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
         return new ViewHolder(view);
     }
-    // Bind values based on position of element
+
+    /**
+     * Bind elements to View based on position of element
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Get the data at position
@@ -41,7 +51,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         holder.bind(tweet);
     }
 
-    // Define a viewholder
     @Override
     public int getItemCount() {
         return tweets.size();
@@ -64,18 +73,23 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
             Glide.with(context).load(tweet.user.profileImageUrl).transform(new RoundedCorners(90)).into(ivProfileImage);
+
         }
     }
 
-   /* Methods for pull down to refresh */
+   /* Methods for pull-down-to-refresh */
 
-    // Clean all elements of the recycler
+    /**
+     * Clean all elements of the recycler
+     */
     public void clear() {
         tweets.clear();
         notifyDataSetChanged();
     }
 
-    // Add a list of items -- change to type used
+    /**
+     * Add a list of items
+     */
     public void addAll(List<Tweet> list) {
         tweets.addAll(list);
         notifyDataSetChanged();
