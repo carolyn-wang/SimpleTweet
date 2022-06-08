@@ -94,6 +94,8 @@ public class TimelineActivity extends AppCompatActivity {
         swipeContainer.setRefreshing(false);
     }
 
+
+    // https://guides.codepath.org/android/Implementing-Pull-to-Refresh-Guide#recyclerview-with-swiperefreshlayout
     /*
         public void fetchTimelineAsync(int page) {
         // Send the network request to fetch the updated data
