@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:counterEnabled="true"
+    app:counterMaxLength="@string/maxTweetLength"
     tools:context=".ComposeActivity">
 
-    <EditText
+<EditText
         android:id="@+id/etCompose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,4 +27,5 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@id/etCompose"
         android:text="@string/tweet" />
-</RelativeLayout>
+
+    </com.google.android.material.textfield.TextInputLayout>
