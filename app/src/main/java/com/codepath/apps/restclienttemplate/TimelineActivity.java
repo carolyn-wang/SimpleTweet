@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,11 +32,12 @@ import okhttp3.Headers;
 public class TimelineActivity extends AppCompatActivity {
 
     public static final String TAG = "TimelineActivity";
-    private final int REQUEST_CODE = 20;
+    private final int REQUEST_CODE = 27;
     TwitterClient client;
     RecyclerView rvTweets;
     List<Tweet> tweets;
     TweetsAdapter adapter;
+    private SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +54,70 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         rvTweets.setAdapter(adapter);
         // Recycler view setup: layout manager and adapter
+
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                // TODO: fix page variable
+                fetchTimelineAsync(0);
+            }
+        });
+
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+
         populateHomeTimeline();
     }
 
+    // TODO: way to modularize this and combine with populateHomeTimeline?
+
+    /**
+     * Sends the network request to fetch the updated data
+     * endpoint here: getHomeTimeline()
+     *
+     * @param page
+     */
+    public void fetchTimelineAsync(int page) {
+        adapter.clear();
+        populateHomeTimeline();
+        Log.i(TAG, "refreshing timeline");
+        // Now we call setRefreshing(false) to signal refresh has finished
+        swipeContainer.setRefreshing(false);
+    }
+
+    /*
+        public void fetchTimelineAsync(int page) {
+        // Send the network request to fetch the updated data
+        // `client` here is an instance of Android Async HTTP
+        // getHomeTimeline is an example endpoint.
+        client.getHomeTimeline(new JsonHttpResponseHandler() {
+            public void onSuccess(JSONArray json) {
+                // Remember to CLEAR OUT old items before appending in the new ones
+                adapter.clear();
+                // ...the data has come back, add new items to your adapter...
+                adapter.addAll(...);
+                // Now we call setRefreshing(false) to signal refresh has finished
+                swipeContainer.setRefreshing(false);
+            }
+
+            public void onFailure(Throwable e) {
+                Log.d("DEBUG", "Fetch timeline error: " + e.toString());
+            }
+        });
+    }
+     */
+
     @Override
-    public boolean onCreateOptionsMenu (Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
@@ -68,7 +129,7 @@ public class TimelineActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.compose){
+        if (item.getItemId() == R.id.compose) {
             // Compose icon has been selected
             Toast.makeText(this, "Composing message", Toast.LENGTH_SHORT).show();
             // Navigate to the compose activity
@@ -82,7 +143,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK){
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             // get data from the intent (tweet)
             Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
             // Update the RV with this tweet
@@ -109,8 +170,9 @@ public class TimelineActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+
             @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable)    {
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.e(TAG, "onFailure!" + response, throwable);
             }
         });
@@ -123,16 +185,5 @@ public class TimelineActivity extends AppCompatActivity {
 //        this.startActivity(intent);
     }
 
-    // TimelineActivity.java
-    public void onLogoutButton() {
-        // forget who's logged in
-        TwitterApp.getRestClient(this).clearAccessToken();
-
-        // navigate backwards to Login screen
-        Intent i = new Intent(this, LoginActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // this makes sure the Back button won't work
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // same as above
-        startActivity(i);
-    }
 
 }
