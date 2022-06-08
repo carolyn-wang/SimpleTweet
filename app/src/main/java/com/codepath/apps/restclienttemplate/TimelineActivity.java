@@ -69,6 +69,8 @@ public class TimelineActivity extends AppCompatActivity {
             // Compose icon has been selected
             Toast.makeText(this, "Composing message", Toast.LENGTH_SHORT).show();
             // Navigate to the compose activity
+            Intent intent = new Intent(this, ComposeActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -97,14 +99,15 @@ public class TimelineActivity extends AppCompatActivity {
         });
     }
 
-//    public void logOut(View v) {
-////        Intent intent = new Intent(this, LoginActivity.class);
-//        this.finish();
-//        client.clearAccessToken();
-////        this.startActivity(intent);
-//    }
+    public void logOut(View v) {
+//        Intent intent = new Intent(this, LoginActivity.class);
+        this.finish();
+        client.clearAccessToken();
+//        this.startActivity(intent);
+    }
 
-    public void onLogoutButton(View v) {
+    // TimelineActivity.java
+    public void onLogoutButton() {
         // forget who's logged in
         TwitterApp.getRestClient(this).clearAccessToken();
 
