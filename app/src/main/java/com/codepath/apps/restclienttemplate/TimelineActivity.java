@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate;
 import static com.facebook.stetho.inspector.network.PrettyPrinterDisplayType.JSON;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,6 +40,7 @@ public class TimelineActivity extends AppCompatActivity {
     List<Tweet> tweets;
     TweetsAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +54,8 @@ public class TimelineActivity extends AppCompatActivity {
         // Find the toolbar view and set as ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Display icon in the toolbar
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.drawable.ic_launcher);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
 
         // Find recycler view
         rvTweets = findViewById(R.id.rvTweets);

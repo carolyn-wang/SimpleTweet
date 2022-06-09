@@ -12,8 +12,21 @@
         android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleTextColor="@android:color/white"
+        app:contentInsetStart="0dp"
         android:background="?attr/colorPrimary">
+<!--        TODO: Set icon size as variables-->
+        <ImageView
+            android:src="@drawable/ic_vector_twitter_logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/twitterIcon" />
+        <ImageView
+            android:src="@drawable/ic_vector_sparkle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:id="@+id/sparkleIcon" />
     </androidx.appcompat.widget.Toolbar>
 
     <!-- Layout for content is here. -->
@@ -57,12 +70,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:src="@android:drawable/ic_input_add"
+            android:src="@drawable/ic_vector_compose"
             app:fabSize="normal"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:onClick="composeTweet"
-            app:backgroundTint="@color/twitter_blue"/>
+            app:backgroundTint="@color/twitter_blue"
+            android:tint="@android:color/white"/>
 
     </RelativeLayout>
 
