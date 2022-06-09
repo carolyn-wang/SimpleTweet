@@ -43,6 +43,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:onClick="composeTweet"
-        app:backgroundTint="#ff1da1f2"/>
+        app:backgroundTint="@color/twitter_blue"/>
 
 </RelativeLayout>
