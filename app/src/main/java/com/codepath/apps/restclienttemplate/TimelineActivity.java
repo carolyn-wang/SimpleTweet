@@ -40,7 +40,8 @@ public class TimelineActivity extends AppCompatActivity {
     List<Tweet> tweets;
     TweetsAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
-    private ActionBar actionBar;
+    private ActionBar tActionBar;
+    private ActionBar bActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +53,15 @@ public class TimelineActivity extends AppCompatActivity {
 
         // TODO: clean up code here
         // Find the toolbar view and set as ActionBar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
+        Toolbar topToolbar = (Toolbar) findViewById(R.id.topToolbar);
+        setSupportActionBar(topToolbar);
+        tActionBar = getSupportActionBar();
+        tActionBar.setDisplayShowTitleEnabled(false);
+
+        Toolbar bottomToolbar = (Toolbar) findViewById(R.id.bottomToolbar);
+        setSupportActionBar(bottomToolbar);
+        bActionBar = getSupportActionBar();
+        bActionBar.setDisplayShowTitleEnabled(false);
 
         // Find recycler view
         rvTweets = findViewById(R.id.rvTweets);

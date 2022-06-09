@@ -5,37 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:uiOptions="splitActionBarWhenNarrow"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:minHeight="?attr/actionBarSize"
+    <include
+        layout="@layout/top_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contentInsetStart="0dp"
-        android:background="?attr/colorPrimary">
-<!--        TODO: Set icon size as variables-->
-        <ImageView
-            android:src="@drawable/ic_vector_twitter_logo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/twitterIcon" />
-        <ImageView
-            android:src="@drawable/ic_vector_sparkle"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="right"
-            android:id="@+id/sparkleIcon" />
-    </androidx.appcompat.widget.Toolbar>
+        android:layout_alignParentBottom="true"/>
 
     <!-- Layout for content is here. -->
 
+<!--    TODO: replace height with variable-->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="672dp"
+        android:layout_gravity="center_vertical">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeContainer"
@@ -79,5 +66,11 @@
             android:tint="@android:color/white"/>
 
     </RelativeLayout>
+
+    <include
+        layout="@layout/bottom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
 
 </LinearLayout>
