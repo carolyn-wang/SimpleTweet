@@ -14,10 +14,7 @@
         android:layout_height="@dimen/timeline_pfp_diameter"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_margin="10dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -48,14 +45,15 @@
         android:layout_toEndOf="@id/ivProfileImage"
         android:text="tweet content" />
 
+<!--    TODO: fix gap above and below images-->
 
     <ImageView
         android:id="@+id/ivTweetImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvBody"
-        android:layout_alignParentTop="false"
-        android:layout_marginTop="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
         android:layout_marginBottom="0dp"
         tools:srcCompat="@tools:sample/avatars" />
 
