@@ -121,6 +121,7 @@ public class TimelineActivity extends AppCompatActivity {
     /**
      * Inflates the menu
      * Adds items to the action bar if it is present.
+     *
      * @param menu
      * @return Menu with all menu options
      */
@@ -130,10 +131,12 @@ public class TimelineActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+
     /***
      * Handle presses on the action bar items
      * @param item - menu item
      */
+    /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.compose) {
@@ -145,52 +148,66 @@ public class TimelineActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_CODE);
             return true;
         }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            // get data from the intent (tweet)
-            Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
-            // Update the RV with this tweet
-            // Modify data source of tweets
-            tweets.add(0, tweet);
-            // update adapter
-            adapter.notifyItemInserted(0);
-            rvTweets.smoothScrollToPosition(0);
+            return super.onOptionsItemSelected(item);
         }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+     */
 
-    private void populateHomeTimeline() {
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.i(TAG, "onSuccess!" + json.toString());
-                JSONArray jsonArray = json.jsonArray;
-                try {
-                    tweets.addAll(Tweet.fromJsonArray(jsonArray));
-                    adapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    Log.e(TAG, "json exception", e);
-                    e.printStackTrace();
+        @Override
+        protected void onActivityResult ( int requestCode, int resultCode, @Nullable Intent data){
+            if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+                // get data from the intent (tweet)
+                Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
+                // Update the RV with this tweet
+                // Modify data source of tweets
+                tweets.add(0, tweet);
+                // update adapter
+                adapter.notifyItemInserted(0);
+                rvTweets.smoothScrollToPosition(0);
+            }
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+
+        private void populateHomeTimeline () {
+            client.getHomeTimeline(new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    Log.i(TAG, "onSuccess!" + json.toString());
+                    JSONArray jsonArray = json.jsonArray;
+                    try {
+                        tweets.addAll(Tweet.fromJsonArray(jsonArray));
+                        adapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        Log.e(TAG, "json exception", e);
+                        e.printStackTrace();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.e(TAG, "onFailure!" + response, throwable);
-            }
-        });
-    }
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    Log.e(TAG, "onFailure!" + response, throwable);
+                }
+            });
+        }
 
-    public void logOut(View v) {
+        /***
+         * Composes tweet
+         * @param v
+         */
+        public void composeTweet (View v){
+            // Compose icon has been selected
+            Toast.makeText(this, "Composing message", Toast.LENGTH_SHORT).show();
+            // Navigate to the compose activity
+            Intent intent = new Intent(this, ComposeActivity.class);
+            // Launches child activity (compose) & sends data back to parent
+            startActivityForResult(intent, REQUEST_CODE); // TODO: deprecated
+        }
+
+        public void logOut(View v){
 //        Intent intent = new Intent(this, LoginActivity.class);
-        this.finish();
-        client.clearAccessToken();
+            this.finish();
+            client.clearAccessToken();
 //        this.startActivity(intent);
+        }
+
+
     }
-
-
-}

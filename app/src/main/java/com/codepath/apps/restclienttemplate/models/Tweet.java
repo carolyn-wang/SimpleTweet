@@ -80,7 +80,10 @@ public class Tweet {
         try {
             long dateMillis = sf.parse(rawJsonDate).getTime();
             relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
-                    System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+                    System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString()
+                    .replace( "hours" , "h" )
+                    .replace( "In" , "") // TODO: better way to do this?
+                    .replace( "minutes" , "m" );
         } catch (ParseException e) {
             e.printStackTrace();
         }
