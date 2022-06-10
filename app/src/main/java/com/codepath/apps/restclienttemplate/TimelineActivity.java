@@ -101,7 +101,6 @@ public class TimelineActivity extends AppCompatActivity {
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
                 // TODO: fix page variable
-                fetchTimelineAsync();
             }
         });
 

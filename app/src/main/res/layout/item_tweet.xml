@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/imageView"
     android:layout_width="match_parent"
@@ -15,6 +16,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        tools:layout_editor_absoluteY="7dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -22,49 +25,54 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/ivProfileImage"
-        android:text="Posted x minutes ago" />
+        android:text="Posted x minutes ago"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_below="@id/tvTime"
-        android:layout_toEndOf="@+id/ivProfileImage"
-        android:text="Full Name" />
+        android:text="Full Name"
+        app:layout_constraintStart_toEndOf="@id/ivProfileImage"/>
 
     <TextView
         android:id="@+id/tvScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="0dp"
-        android:layout_below="@id/tvTime"
-        android:layout_toEndOf="@+id/tvName"
-        android:text="Screen Name" />
+        android:text="Screen Name"
+        app:layout_constraintStart_toEndOf="@+id/tvName"
+        tools:layout_editor_absoluteY="0dp" />
 
     <TextView
         android:id="@+id/tvBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_below="@id/tvScreenName"
-        android:layout_toEndOf="@id/ivProfileImage"
+        android:layout_marginTop="8dp"
         android:autoLink="all"
         android:linksClickable="true"
-        android:text="tweet content" />
+        android:text="tweet content"
+        app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <ImageView
         android:id="@+id/ivTweetImage"
-        android:foregroundGravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvBody"
+        android:layout_marginTop="12dp"
         android:adjustViewBounds="true"
+        android:foregroundGravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tvBody"
+        tools:layout_editor_absoluteX="132dp"
         tools:srcCompat="@tools:sample/avatars" />
 
-</RelativeLayout>
+    <ImageButton
+        android:id="@+id/ivFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/ivTweetImage"
+        app:layout_constraintStart_toEndOf="@id/ivProfileImage"
+        app:srcCompat="@drawable/ic_vector_heart_stroke" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
