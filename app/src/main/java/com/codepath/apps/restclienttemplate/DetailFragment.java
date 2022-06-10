@@ -47,6 +47,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
 public class DetailFragment extends Fragment {
@@ -95,9 +96,9 @@ public class DetailFragment extends Fragment {
 
         tvDetailName.setText(strName);
         tvDetailScreenName.setText(strScreenName);
-        Glide.with(view).load(strDetailProfileImage).into(ivDetailProfileImage);
+        Glide.with(view).load(strDetailProfileImage).transform(new RoundedCorners(90)).into(ivDetailProfileImage);
         tvDetailBody.setText(strBody);
-        Glide.with(view).load(strDetailImageUrl).into(tvDetailTweetImage);
+        Glide.with(view).load(strDetailImageUrl).transform(new RoundedCorners(90)).into(tvDetailTweetImage);
         tvDetailTime.setText(strCreatedAt);
     }
 }

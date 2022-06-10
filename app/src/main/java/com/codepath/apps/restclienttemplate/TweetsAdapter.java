@@ -6,6 +6,7 @@ import android.graphics.Movie;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -67,6 +68,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvName;
         TextView tvScreenName;
         ImageView ivTweetImage;
+        ImageButton ibFavorite;
+        TextView tvFavoriteCount;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
@@ -76,6 +79,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvName = itemView.findViewById(R.id.tvName);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
             ivTweetImage = itemView.findViewById(R.id.ivTweetImage);
+            ibFavorite = itemView.findViewById(R.id.ibFavorite);
+            tvFavoriteCount = itemView.findViewById(R.id.tvFavoriteCount);
             itemView.setOnClickListener(this);
         }
 
@@ -87,11 +92,24 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvScreenName.setText(tweet.user.screenName);
             Glide.with(context).load(tweet.user.profileImageUrl).transform(new RoundedCorners(90)).into(ivProfileImage);
             if (tweet.imageUrl != ""){
-                Glide.with(context).load(tweet.imageUrl).into(ivTweetImage);
+//                TODO: variable radius
+                Glide.with(context).load(tweet.imageUrl).transform(new RoundedCorners(90)).into(ivTweetImage);
+                ivTweetImage.setVisibility(View.VISIBLE);
             }
             else{
-                Glide.with(context).clear(ivTweetImage);
+                ivTweetImage.setVisibility(View.INVISIBLE);
             }
+
+            ibFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // If not already favorited
+                        // Tell Twitter I want to favorite this
+                        // Change drawable to filled in heart
+                        // increment the text inside tvFavoriteCount
+                    // else, if already favorited, unfavorite
+                }
+            });
 
         }
 
