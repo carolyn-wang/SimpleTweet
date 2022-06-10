@@ -42,7 +42,7 @@ public class TimelineActivity extends AppCompatActivity {
     private ActionBar bActionBar;
     DetailFragment fragment;
     public static FragmentManager fragManager;
-    private Integer lowestMaxId;
+    private long lowestMaxId;
     private EndlessRecyclerViewScrollListener scrollListener;
 
     @Override
@@ -101,6 +101,7 @@ public class TimelineActivity extends AppCompatActivity {
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
                 // TODO: fix page variable
+                fetchTimelineAsync();
             }
         });
 
@@ -123,7 +124,7 @@ public class TimelineActivity extends AppCompatActivity {
         //  --> Deserialize and construct new model objects from the API response
         //  --> Append the new data objects to the existing set of items inside the array of items
         //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
-        populateHomeTimeline();
+        populateHomeTimelineByIndex(lowestMaxId);
     }
 
     // TODO: way to modularize this and combine with populateHomeTimeline?
@@ -182,6 +183,10 @@ public class TimelineActivity extends AppCompatActivity {
             // Update the RV with this tweet
             // Modify data source of tweets
             tweets.add(0, tweet);
+            // update lowestMaxId every time you add tweet
+            if (Integer.valueOf(tweet.id) > lowestMaxId){
+                lowestMaxId = Long.valueOf(tweet.id);
+            }
             // update adapter
             adapter.notifyItemInserted(0);
             rvTweets.smoothScrollToPosition(0);
@@ -189,8 +194,8 @@ public class TimelineActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void populateHomeTimeline() {
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
+    private void populateHomeTimelineByIndex(long maxId) {
+        client.getHomeTimeline( maxId, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG, "onSuccess!" + json.toString());
@@ -209,6 +214,10 @@ public class TimelineActivity extends AppCompatActivity {
                 Log.e(TAG, "onFailure!" + response, throwable);
             }
         });
+    }
+
+    private void populateHomeTimeline(){
+        populateHomeTimelineByIndex(0);
     }
 
     /***
