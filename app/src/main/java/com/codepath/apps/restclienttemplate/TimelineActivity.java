@@ -1,7 +1,5 @@
 package com.codepath.apps.restclienttemplate;
 
-import static com.facebook.stetho.inspector.network.PrettyPrinterDisplayType.JSON;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,10 +12,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -27,13 +23,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.parceler.Parcels;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Headers;
-// DetailFragment.OnItemSelectedListener
-public class TimelineActivity extends AppCompatActivity {
+
+public class TimelineActivity extends AppCompatActivity{
 
     public static final String TAG = "TimelineActivity";
     private final int REQUEST_CODE = 27;
@@ -45,6 +40,7 @@ public class TimelineActivity extends AppCompatActivity {
     private ActionBar tActionBar;
     private ActionBar bActionBar;
     DetailFragment fragment;
+    public static FragmentManager fragManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +91,8 @@ public class TimelineActivity extends AppCompatActivity {
         fragment = (DetailFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.detailFragment);
 
+
+        fragManager = getSupportFragmentManager();
     }
 
     // TODO: way to modularize this and combine with populateHomeTimeline?
@@ -145,78 +143,78 @@ public class TimelineActivity extends AppCompatActivity {
         }
      */
 
-        @Override
-        protected void onActivityResult ( int requestCode, int resultCode, @Nullable Intent data){
-            if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-                // get data from the intent (tweet)
-                Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
-                // Update the RV with this tweet
-                // Modify data source of tweets
-                tweets.add(0, tweet);
-                // update adapter
-                adapter.notifyItemInserted(0);
-                rvTweets.smoothScrollToPosition(0);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            // get data from the intent (tweet)
+            Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
+            // Update the RV with this tweet
+            // Modify data source of tweets
+            tweets.add(0, tweet);
+            // update adapter
+            adapter.notifyItemInserted(0);
+            rvTweets.smoothScrollToPosition(0);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void populateHomeTimeline() {
+        client.getHomeTimeline(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.i(TAG, "onSuccess!" + json.toString());
+                JSONArray jsonArray = json.jsonArray;
+                try {
+                    tweets.addAll(Tweet.fromJsonArray(jsonArray));
+                    adapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    Log.e(TAG, "json exception", e);
+                    e.printStackTrace();
+                }
             }
-            super.onActivityResult(requestCode, resultCode, data);
-        }
 
-        private void populateHomeTimeline () {
-            client.getHomeTimeline(new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Headers headers, JSON json) {
-                    Log.i(TAG, "onSuccess!" + json.toString());
-                    JSONArray jsonArray = json.jsonArray;
-                    try {
-                        tweets.addAll(Tweet.fromJsonArray(jsonArray));
-                        adapter.notifyDataSetChanged();
-                    } catch (JSONException e) {
-                        Log.e(TAG, "json exception", e);
-                        e.printStackTrace();
-                    }
-                }
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "onFailure!" + response, throwable);
+            }
+        });
+    }
 
-                @Override
-                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                    Log.e(TAG, "onFailure!" + response, throwable);
-                }
-            });
-        }
+    /***
+     * Composes tweet and refreshes timeline to show new tweet
+     * @param v View passed in by onClick call in xml file
+     */
+    public void composeTweet(View v) {
+        // Compose icon has been selected
+        FragmentManager fm = getSupportFragmentManager();
+        ComposeFragment composeFragment = ComposeFragment.newInstance("new tweet");
+        composeFragment.show(fm, "fragment_compose");
+        fetchTimelineAsync();
+    }
 
-        /***
-         * Composes tweet and refreshes timeline to show new tweet
-         * @param v View passed in by onClick call in xml file
-         */
-        public void composeTweet (View v){
-            // Compose icon has been selected
-            FragmentManager fm = getSupportFragmentManager();
-            ComposeFragment composeFragment = ComposeFragment.newInstance("new tweet");
-            composeFragment.show(fm, "fragment_compose");
-            fetchTimelineAsync();
-        }
-
-        public void logOut(View v){
+    public void logOut(View v) {
 //        Intent intent = new Intent(this, LoginActivity.class);
-            this.finish();
-            client.clearAccessToken();
+        this.finish();
+        client.clearAccessToken();
 //        this.startActivity(intent);
-        }
+    }
 
     /**
      * Replaces current main fragment
      */
-    public void openTweetDetail(View v){
-            // Begin the transaction
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+    public static void openTweetDetail(Tweet tweet) {
+        // Begin the transaction
+        FragmentTransaction ft = fragManager.beginTransaction();
 // Replace the contents of the container with the new fragment
-            ft.replace(R.id.scrollingTimeline, new DetailFragment());
+        DetailFragment tweetDetail = DetailFragment.newInstance(tweet);
+        ft.replace(R.id.scrollingTimeline, tweetDetail);
 // or ft.add(R.id.your_placeholder, new FooFragment());
 // Complete the changes added above
-            ft.commit();
-        }
+        ft.commit();
+    }
 
-
-        // Now we can define the action to take in the activity when the fragment event fires
-        // This is implementing the `OnItemSelectedListener` interface methods
+//     Now we can define the action to take in the activity when the fragment event fires
+//     This is implementing the `OnItemSelectedListener` interface methods
 //    @Override
 //    public void onRssItemSelected(String link) {
 //        if (fragment != null && fragment.isInLayout()) {
@@ -224,4 +222,6 @@ public class TimelineActivity extends AppCompatActivity {
 //            setContentView(R.layout.fragment_detail);
 //        }
 //    }
+
+
 }

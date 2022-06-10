@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_alignParentStart="true"
     android:layout_alignParentTop="true"
-    android:layout_margin="10dp"
-    android:onClick="openTweetDetail">
+    android:layout_margin="10dp">
 
     <ImageView
         android:id="@+id/ivProfileImage"
@@ -29,13 +28,23 @@
         android:text="Posted x minutes ago" />
 
     <TextView
-        android:id="@+id/tvScreenName"
+        android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_below="@id/tvTime"
         android:layout_toEndOf="@+id/ivProfileImage"
+        android:text="Full Name" />
+
+    <TextView
+        android:id="@+id/tvScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_below="@id/tvTime"
+        android:layout_toEndOf="@+id/tvName"
         android:text="Screen Name" />
 
     <TextView

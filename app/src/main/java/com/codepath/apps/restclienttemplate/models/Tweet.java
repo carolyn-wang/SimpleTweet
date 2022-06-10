@@ -20,6 +20,7 @@ public class Tweet {
     public String body;
     public String createdAt;
     public User user;
+
     public String imageUrl;
     public String relativeTimeAgo;
 
@@ -89,5 +90,25 @@ public class Tweet {
         }
 
         return relativeDate;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getRelativeTimeAgo() {
+        return relativeTimeAgo;
     }
 }
