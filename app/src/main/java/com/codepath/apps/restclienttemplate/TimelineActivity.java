@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Headers;
-
+// DetailFragment.OnItemSelectedListener
 public class TimelineActivity extends AppCompatActivity {
 
     public static final String TAG = "TimelineActivity";
@@ -43,6 +44,7 @@ public class TimelineActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeContainer;
     private ActionBar tActionBar;
     private ActionBar bActionBar;
+    DetailFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,9 @@ public class TimelineActivity extends AppCompatActivity {
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(R.color.twitter_blue, R.color.medium_red);
         populateHomeTimeline();
+
+        fragment = (DetailFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.detailFragment);
 
     }
 
@@ -196,5 +201,27 @@ public class TimelineActivity extends AppCompatActivity {
 //        this.startActivity(intent);
         }
 
+    /**
+     * Replaces current main fragment
+     */
+    public void openTweetDetail(View v){
+            // Begin the transaction
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+// Replace the contents of the container with the new fragment
+            ft.replace(R.id.scrollingTimeline, new DetailFragment());
+// or ft.add(R.id.your_placeholder, new FooFragment());
+// Complete the changes added above
+            ft.commit();
+        }
 
-    }
+
+        // Now we can define the action to take in the activity when the fragment event fires
+        // This is implementing the `OnItemSelectedListener` interface methods
+//    @Override
+//    public void onRssItemSelected(String link) {
+//        if (fragment != null && fragment.isInLayout()) {
+//            fragment.setText(link);
+//            setContentView(R.layout.fragment_detail);
+//        }
+//    }
+}
