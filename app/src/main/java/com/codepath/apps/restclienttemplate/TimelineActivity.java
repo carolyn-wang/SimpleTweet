@@ -5,6 +5,7 @@ import static com.facebook.stetho.inspector.network.PrettyPrinterDisplayType.JSO
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -81,13 +82,14 @@ public class TimelineActivity extends AppCompatActivity {
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
                 // TODO: fix page variable
-                fetchTimelineAsync(0);
+                fetchTimelineAsync();
             }
         });
 
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(R.color.twitter_blue, R.color.medium_red);
         populateHomeTimeline();
+
     }
 
     // TODO: way to modularize this and combine with populateHomeTimeline?
@@ -95,40 +97,14 @@ public class TimelineActivity extends AppCompatActivity {
     /**
      * Sends the network request to fetch the updated data
      * endpoint here: getHomeTimeline()
-     *
-     * @param page
      */
-    public void fetchTimelineAsync(int page) {
+    public void fetchTimelineAsync() {
         adapter.clear();
         populateHomeTimeline();
         Log.i(TAG, "refreshing timeline");
         // Now we call setRefreshing(false) to signal refresh has finished
         swipeContainer.setRefreshing(false);
     }
-
-
-    // https://guides.codepath.org/android/Implementing-Pull-to-Refresh-Guide#recyclerview-with-swiperefreshlayout
-    /*
-        public void fetchTimelineAsync(int page) {
-        // Send the network request to fetch the updated data
-        // `client` here is an instance of Android Async HTTP
-        // getHomeTimeline is an example endpoint.
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
-            public void onSuccess(JSONArray json) {
-                // Remember to CLEAR OUT old items before appending in the new ones
-                adapter.clear();
-                // ...the data has come back, add new items to your adapter...
-                adapter.addAll(...);
-                // Now we call setRefreshing(false) to signal refresh has finished
-                swipeContainer.setRefreshing(false);
-            }
-
-            public void onFailure(Throwable e) {
-                Log.d("DEBUG", "Fetch timeline error: " + e.toString());
-            }
-        });
-    }
-     */
 
     /**
      * Inflates the menu
@@ -209,10 +185,18 @@ public class TimelineActivity extends AppCompatActivity {
             // Compose icon has been selected
             Toast.makeText(this, "Composing message", Toast.LENGTH_SHORT).show();
             // Navigate to the compose activity
-            Intent intent = new Intent(this, ComposeActivity.class);
+//            Intent intent = new Intent(this, ComposeActivity.class);
             // Launches child activity (compose) & sends data back to parent
-            startActivityForResult(intent, REQUEST_CODE); // TODO: deprecated
+//            startActivityForResult(intent, REQUEST_CODE); // TODO: deprecated
+            showEditDialog();
+
         }
+
+    private void showEditDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        ComposeFragment composeFragment = ComposeFragment.newInstance("new tweet");
+        composeFragment.show(fm, "fragment_compose");
+    }
 
         public void logOut(View v){
 //        Intent intent = new Intent(this, LoginActivity.class);

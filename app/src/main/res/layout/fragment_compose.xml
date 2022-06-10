@@ -21,12 +21,12 @@
     android:minWidth="400dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:padding="10dp"
     android:layout_gravity="center"
     android:orientation="vertical"
     app:counterEnabled="true"
     app:counterMaxLength="@string/maxTweetLength"
     tools:context=".TimelineActivity">
-
 
     <EditText
         android:id="@+id/etCompose"
@@ -38,7 +38,7 @@
         android:gravity="start|top"
         android:minLines="5"
         android:inputType="textMultiLine"
-        android:hint="What's happening"/>
+        android:hint="What's happening 2.0"/>
 
     <Button
         android:id="@+id/btnTweet"

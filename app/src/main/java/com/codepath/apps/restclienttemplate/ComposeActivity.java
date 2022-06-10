@@ -19,6 +19,7 @@ import org.parceler.Parcels;
 
 import okhttp3.Headers;
 
+// TODO: Delete this class later
 public class ComposeActivity extends AppCompatActivity {
 
     public static final String TAG = "ComposeActivity";
