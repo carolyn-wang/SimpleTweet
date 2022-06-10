@@ -4,12 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/topToolbar"
             android:layout_width="match_parent"
@@ -31,7 +25,5 @@
                 android:layout_marginEnd="20dp"
                 android:src="@drawable/ic_vector_sparkle" />
         </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

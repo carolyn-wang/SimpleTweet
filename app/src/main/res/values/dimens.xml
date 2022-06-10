@@ -7,4 +7,9 @@
     <!--    item_tweet.xml-->
     <dimen name="timeline_pfp_diameter">50dp</dimen>
 
+    <!--    activity_timeline.xml-->
+
+<!--    Bottom margin for LogOut and ComposeTweet buttons -->
+    <dimen name="mainButtonsBottomMargin">70dp</dimen>
+
 </resources>

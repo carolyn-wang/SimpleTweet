@@ -8,12 +8,18 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
     <include
         layout="@layout/top_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
         app:layout_scrollFlags="scroll|enterAlways" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <!--    TODO: replace height with variable-->
     <RelativeLayout
@@ -41,34 +47,31 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/compose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="?attr/actionBarSize"
-            android:onClick="composeTweet"
-            android:src="@drawable/ic_vector_compose"
-            android:tint="@android:color/white"
-            app:backgroundTint="@color/twitter_blue"
-            app:fabSize="normal" />
-
-        <Button
-            android:id="@+id/ivLogOutbutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="?attr/actionBarSize"
-            android:onClick="onLogout"
-            android:text="Log Out"
-            tools:ignore="OnClick" />
-
     </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/compose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="@dimen/mainButtonsBottomMargin"
+        android:onClick="composeTweet"
+        android:src="@drawable/ic_vector_compose"
+        android:tint="@android:color/white"
+        app:backgroundTint="@color/twitter_blue"
+        app:fabSize="normal" />
+
+    <Button
+        android:id="@+id/ivLogOutbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="@dimen/mainButtonsBottomMargin"
+        android:onClick="onLogout"
+        android:text="Log Out"
+        tools:ignore="OnClick" />
 
     <include
         layout="@layout/bottom_toolbar"
