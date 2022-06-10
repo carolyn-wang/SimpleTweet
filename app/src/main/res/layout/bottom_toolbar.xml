@@ -4,8 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--    TODO: fix formating here
-        TODO: Figure out split toolbar-->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/bottomToolbar"
             android:minHeight="?attr/actionBarSize"

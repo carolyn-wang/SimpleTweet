@@ -1,7 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -38,8 +37,6 @@ public class TimelineActivity extends AppCompatActivity {
     List<Tweet> tweets;
     TweetsAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
-    private ActionBar tActionBar;
-    private ActionBar bActionBar;
     public static FragmentManager fragManager;
     private long lowestMaxId;
     private EndlessRecyclerViewScrollListener scrollListener;
@@ -56,22 +53,17 @@ public class TimelineActivity extends AppCompatActivity {
         // Find the toolbar view and set as ActionBar
         Toolbar topToolbar = (Toolbar) findViewById(R.id.topToolbar);
         setSupportActionBar(topToolbar);
-        tActionBar = getSupportActionBar();
-        tActionBar.setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         Toolbar bottomToolbar = (Toolbar) findViewById(R.id.bottomToolbar);
         setSupportActionBar(bottomToolbar);
-        bActionBar = getSupportActionBar();
-        bActionBar.setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         lowestMaxId = 0;
 
-        // Find recycler view
         rvTweets = findViewById(R.id.rvTweets);
-        // Initialize the list of tweets and adapter
         tweets = new ArrayList<>();
         adapter = new TweetsAdapter(this, tweets);
-        // Recycler view setup: layout manager and adapter
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         rvTweets.setAdapter(adapter);
 
@@ -86,24 +78,18 @@ public class TimelineActivity extends AppCompatActivity {
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                Tweet lastTweet = tweets.get(tweets.size()-1);
+                Tweet lastTweet = tweets.get(tweets.size() - 1);
                 lowestMaxId = lastTweet.getId();
                 loadMoreTimeline(lowestMaxId);
                 Log.i("lowestMaxId", String.valueOf(tweets.size()));
             }
         };
-        // Adds the scroll listener to RecyclerView
         rvTweets.addOnScrollListener(scrollListener);
 
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-                // TODO: fix page variable
                 fetchTimelineAsync();
             }
         });
@@ -114,19 +100,6 @@ public class TimelineActivity extends AppCompatActivity {
 
         fragManager = getSupportFragmentManager();
     }
-
-//    // Append the next page of data into the adapter
-//    // This method probably sends out a network request and appends new data items to your adapter.
-//    public void loadNextDataFromApi(long offset) {
-//        // Send an API request to retrieve appropriate paginated data
-//        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
-//        //  --> Deserialize and construct new model objects from the API response
-//        //  --> Append the new data objects to the existing set of items inside the array of items
-//        //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
-//        tweets.clear();
-//        loadMoreTimeline(offset);
-//        scrollListener.resetState();
-//    }
 
     /**
      * Sends the network request to fetch the updated data
@@ -177,12 +150,8 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            // get data from the intent (tweet)
             Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
-            // Update the RV with this tweet
-            // Modify data source of tweets
             tweets.add(0, tweet);
-            // update adapter
             adapter.notifyItemInserted(0);
             rvTweets.smoothScrollToPosition(0);
         }
@@ -214,7 +183,7 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     public void populateHomeTimeline() {
-        client.getHomeTimeline( new JsonHttpResponseHandler() {
+        client.getHomeTimeline(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG, "onSuccess!" + json.toString());
@@ -248,36 +217,17 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     public void onLogout(View v) {
-//        Intent intent = new Intent(this, LoginActivity.class);
         this.finish();
         client.clearAccessToken();
-//        this.startActivity(intent);
     }
 
     /**
      * Replaces current main timelineFragment with tweet detailFragment
      */
     public static void openTweetDetail(Tweet tweet) {
-        // Begin the transaction
         FragmentTransaction ft = fragManager.beginTransaction();
-// Replace the contents of the container with the new fragment
         DetailFragment tweetDetail = DetailFragment.newInstance(tweet);
         ft.replace(R.id.scrollingTimeline, tweetDetail);
-// or ft.add(R.id.your_placeholder, new FooFragment());
-// Complete the changes added above
         ft.commit();
     }
-
-
-//     Now we can define the action to take in the activity when the fragment event fires
-//     This is implementing the `OnItemSelectedListener` interface methods
-//    @Override
-//    public void onRssItemSelected(String link) {
-//        if (fragment != null && fragment.isInLayout()) {
-//            fragment.setText(link);
-//            setContentView(R.layout.fragment_detail);
-//        }
-//    }
-
-
 }

@@ -93,7 +93,7 @@ public class Tweet {
             relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
                     System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString()
                     .replace( "hours" , "h" )
-                    .replace( "In" , "") // TODO: better way to do this?
+                    .replace( "In" , "")
                     .replace( "minutes" , "m" );
         } catch (ParseException e) {
             e.printStackTrace();
@@ -118,13 +118,7 @@ public class Tweet {
         return imageUrl;
     }
 
-    public String getRelativeTimeAgo() {
-        return relativeTimeAgo;
-    }
-
     public boolean isFavorited() {return isFavorited;};
-
-    public Integer getFavoriteCount(){return favoriteCount;};
 
     public long getId(){
         return Long.valueOf(id);

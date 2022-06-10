@@ -89,7 +89,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             itemView.setOnClickListener(this);
         }
 
-        // take out different attributes of Tweet and fill out view
         public void bind(Tweet tweet) {
             tvTime.setText(tweet.relativeTimeAgo);
             tvBody.setText(tweet.body);
@@ -151,7 +150,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                         });
                     }
                     Log.i("FavoriteTweet", "done");
-//                    tvFavoriteCount.setText(String.valueOf(tweet.getFavoriteCount()));
                 }
             });
 
