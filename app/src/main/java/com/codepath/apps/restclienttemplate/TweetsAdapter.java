@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Movie;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,6 +91,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody.setText(tweet.body);
             tvName.setText(tweet.user.name);
             tvScreenName.setText(tweet.user.screenName);
+//            tvFavoriteCount.setText(tweet.favoriteCount);
             Glide.with(context).load(tweet.user.profileImageUrl).transform(new RoundedCorners(90)).into(ivProfileImage);
             if (tweet.imageUrl != ""){
 //                TODO: variable radius
@@ -97,16 +99,27 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 ivTweetImage.setVisibility(View.VISIBLE);
             }
             else{
-                ivTweetImage.setVisibility(View.INVISIBLE);
+                ivTweetImage.setVisibility(View.GONE);
             }
 
             ibFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // If not already favorited
+                    if(!tweet.isFavorited()){
                         // Tell Twitter I want to favorite this
                         // Change drawable to filled in heart
                         // increment the text inside tvFavoriteCount
+                        Drawable newHeart = context.getDrawable(R.drawable.ic_vector_heart);
+                        ibFavorite.setImageDrawable(newHeart);
+                        tweet.isFavorited = true;
+
+                    }else{
+                        Drawable newHeart = context.getDrawable(R.drawable.ic_vector_heart_stroke);
+                        ibFavorite.setImageDrawable(newHeart);
+                        tweet.isFavorited = false;
+                    }
+
                     // else, if already favorited, unfavorite
                 }
             });

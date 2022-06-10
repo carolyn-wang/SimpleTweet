@@ -23,6 +23,8 @@ public class Tweet {
 
     public String imageUrl;
     public String relativeTimeAgo;
+    public boolean isFavorited;
+    public Integer favoriteCount;
 
     public Tweet() {
     }
@@ -38,6 +40,8 @@ public class Tweet {
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.imageUrl = getImageUrl(jsonObject);
         tweet.relativeTimeAgo = getRelativeTimeAgo(tweet.createdAt);
+        tweet.isFavorited = jsonObject.getBoolean("favorited");
+        tweet.favoriteCount= jsonObject.getInt("favorite_count");
         return tweet;
     }
 
@@ -45,7 +49,10 @@ public class Tweet {
     public static List<Tweet> fromJsonArray(JSONArray jsonArray) throws JSONException {
         List<Tweet> tweets = new ArrayList<>();
         for(int i = 0; i < jsonArray.length(); i++){
-            tweets.add(fromJson(jsonArray.getJSONObject(i)));
+            Tweet newTweet = fromJson(jsonArray.getJSONObject(i));
+            if (newTweet != null){ // skip retweets
+                tweets.add(newTweet);
+            }
         }
         return tweets;
     }
@@ -111,4 +118,9 @@ public class Tweet {
     public String getRelativeTimeAgo() {
         return relativeTimeAgo;
     }
+
+    public boolean isFavorited() {return isFavorited;};
+
+    public Integer getFavoriteCount(){return favoriteCount;};
+
 }
