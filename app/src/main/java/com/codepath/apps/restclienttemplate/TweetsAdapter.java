@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Movie;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.parceler.Parcels;
 
 import java.util.List;
+
+import okhttp3.Headers;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder>{
     Context context;
@@ -91,7 +95,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody.setText(tweet.body);
             tvName.setText(tweet.user.name);
             tvScreenName.setText(tweet.user.screenName);
-//            tvFavoriteCount.setText(tweet.favoriteCount);
+            tvFavoriteCount.setText(String.valueOf(tweet.favoriteCount));
             Glide.with(context).load(tweet.user.profileImageUrl).transform(new RoundedCorners(90)).into(ivProfileImage);
             if (tweet.imageUrl != ""){
 //                TODO: variable radius
@@ -105,22 +109,49 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             ibFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    TwitterClient client = TwitterApp.getRestClient(context);
                     // If not already favorited
                     if(!tweet.isFavorited()){
                         // Tell Twitter I want to favorite this
-                        // Change drawable to filled in heart
-                        // increment the text inside tvFavoriteCount
-                        Drawable newHeart = context.getDrawable(R.drawable.ic_vector_heart);
-                        ibFavorite.setImageDrawable(newHeart);
-                        tweet.isFavorited = true;
+                        client.favoriteTweet(tweet.id, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                // Change drawable to filled in heart
+                                Drawable newHeart = context.getDrawable(R.drawable.ic_vector_heart);
+                                ibFavorite.setImageDrawable(newHeart);
+                                tweet.isFavorited = true;
+                                // increment the text inside tvFavoriteCount
+                                tweet.favoriteCount++;
+                                // TODO: figure out repetition and updating for favorite count
+                                tvFavoriteCount.setText(String.valueOf(tweet.favoriteCount));
+                                Log.i("FavoriteTweet", "favorited onSuccess");
+                            }
 
-                    }else{
-                        Drawable newHeart = context.getDrawable(R.drawable.ic_vector_heart_stroke);
-                        ibFavorite.setImageDrawable(newHeart);
-                        tweet.isFavorited = false;
+                            @Override
+                            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                Log.e("FavoriteTweet", "favorited onFailure", throwable);
+                            }
+                        });
+                    }else{ // else, if already favorited, unfavorite
+                        client.unfavoriteTweet(tweet.id, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                Drawable newHeart = context.getDrawable(R.drawable.ic_vector_heart_stroke);
+                                ibFavorite.setImageDrawable(newHeart);
+                                tweet.isFavorited = false;
+                                tweet.favoriteCount--;
+                                tvFavoriteCount.setText(String.valueOf(tweet.favoriteCount));
+                                Log.i("UnfavoriteTweet", "unfavorited onSuccess");
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                Log.e("UnfavoriteTweet", "favorited onFailure", throwable);
+                            }
+                        });
                     }
-
-                    // else, if already favorited, unfavorite
+                    Log.i("FavoriteTweet", "done");
+//                    tvFavoriteCount.setText(String.valueOf(tweet.getFavoriteCount()));
                 }
             });
 

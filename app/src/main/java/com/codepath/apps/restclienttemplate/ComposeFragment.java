@@ -26,8 +26,6 @@ import okhttp3.Headers;
 
 public class ComposeFragment extends DialogFragment {
 
-    private EditText mEditText;
-
     public static final String TAG = "ComposeActivity";
     public static final int MAX_TWEET_LENGTH = 140;
 

@@ -41,17 +41,6 @@
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-<!--        TODO: move logout button somewhere-->
-        <!--    <Button-->
-        <!--        android:id="@+id/ivLogOutbutton"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:layout_alignParentRight="true"-->
-        <!--        android:layout_alignParentBottom="true"-->
-        <!--        android:onClick="onLogout"-->
-        <!--        android:text="Log Out"-->
-        <!--        tools:ignore="OnClick" />-->
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/compose"
             android:layout_width="wrap_content"
@@ -64,6 +53,16 @@
             android:onClick="composeTweet"
             app:backgroundTint="@color/twitter_blue"
             android:tint="@android:color/white"/>
+
+        <Button
+            android:id="@+id/ivLogOutbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:onClick="onLogout"
+            android:text="Log Out"
+            tools:ignore="OnClick" />
 
     </RelativeLayout>
 

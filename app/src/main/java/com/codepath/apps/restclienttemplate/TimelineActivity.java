@@ -223,7 +223,7 @@ public class TimelineActivity extends AppCompatActivity {
         fetchTimelineAsync();
     }
 
-    public void logOut(View v) {
+    public void onLogout(View v) {
 //        Intent intent = new Intent(this, LoginActivity.class);
         this.finish();
         client.clearAccessToken();
@@ -243,6 +243,7 @@ public class TimelineActivity extends AppCompatActivity {
 // Complete the changes added above
         ft.commit();
     }
+
 
 //     Now we can define the action to take in the activity when the fragment event fires
 //     This is implementing the `OnItemSelectedListener` interface methods

@@ -1,7 +1,6 @@
 package com.codepath.apps.restclienttemplate.models;
 
 import android.text.format.DateUtils;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,11 +19,13 @@ public class Tweet {
     public String body;
     public String createdAt;
     public User user;
+    public String id;
 
     public String imageUrl;
     public String relativeTimeAgo;
     public boolean isFavorited;
     public Integer favoriteCount;
+    public Integer retweetedCount;
 
     public Tweet() {
     }
@@ -38,10 +39,12 @@ public class Tweet {
         }
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+        tweet.id = jsonObject.getString("id_str");
         tweet.imageUrl = getImageUrl(jsonObject);
         tweet.relativeTimeAgo = getRelativeTimeAgo(tweet.createdAt);
         tweet.isFavorited = jsonObject.getBoolean("favorited");
         tweet.favoriteCount= jsonObject.getInt("favorite_count");
+        tweet.retweetedCount = jsonObject.getInt("retweet_count");
         return tweet;
     }
 
