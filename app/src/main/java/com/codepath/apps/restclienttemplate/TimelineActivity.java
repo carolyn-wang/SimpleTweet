@@ -40,7 +40,6 @@ public class TimelineActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeContainer;
     private ActionBar tActionBar;
     private ActionBar bActionBar;
-    DetailFragment fragment;
     public static FragmentManager fragManager;
     private long lowestMaxId;
     private EndlessRecyclerViewScrollListener scrollListener;
@@ -81,12 +80,16 @@ public class TimelineActivity extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvTweets.setLayoutManager(linearLayoutManager);
+
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                loadNextDataFromApi(page);
+                Tweet lastTweet = tweets.get(tweets.size()-1);
+                lowestMaxId = lastTweet.getId();
+                loadMoreTimeline(lowestMaxId);
+                Log.i("lowestMaxId", String.valueOf(tweets.size()));
             }
         };
         // Adds the scroll listener to RecyclerView
@@ -109,25 +112,21 @@ public class TimelineActivity extends AppCompatActivity {
         swipeContainer.setColorSchemeResources(R.color.twitter_blue, R.color.medium_red);
         populateHomeTimeline();
 
-        fragment = (DetailFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.detailFragment);
-
-
         fragManager = getSupportFragmentManager();
     }
 
-    // Append the next page of data into the adapter
-    // This method probably sends out a network request and appends new data items to your adapter.
-    public void loadNextDataFromApi(int offset) {
-        // Send an API request to retrieve appropriate paginated data
-        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
-        //  --> Deserialize and construct new model objects from the API response
-        //  --> Append the new data objects to the existing set of items inside the array of items
-        //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
-        populateHomeTimelineByIndex(lowestMaxId);
-    }
-
-    // TODO: way to modularize this and combine with populateHomeTimeline?
+//    // Append the next page of data into the adapter
+//    // This method probably sends out a network request and appends new data items to your adapter.
+//    public void loadNextDataFromApi(long offset) {
+//        // Send an API request to retrieve appropriate paginated data
+//        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
+//        //  --> Deserialize and construct new model objects from the API response
+//        //  --> Append the new data objects to the existing set of items inside the array of items
+//        //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
+//        tweets.clear();
+//        loadMoreTimeline(offset);
+//        scrollListener.resetState();
+//    }
 
     /**
      * Sends the network request to fetch the updated data
@@ -183,10 +182,6 @@ public class TimelineActivity extends AppCompatActivity {
             // Update the RV with this tweet
             // Modify data source of tweets
             tweets.add(0, tweet);
-            // update lowestMaxId every time you add tweet
-            if (Integer.valueOf(tweet.id) > lowestMaxId){
-                lowestMaxId = Long.valueOf(tweet.id);
-            }
             // update adapter
             adapter.notifyItemInserted(0);
             rvTweets.smoothScrollToPosition(0);
@@ -194,8 +189,32 @@ public class TimelineActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void populateHomeTimelineByIndex(long maxId) {
-        client.getHomeTimeline( maxId, new JsonHttpResponseHandler() {
+    private void loadMoreTimeline(Long maxId) {
+        client.updateTimeline(maxId, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.i(TAG, "onSuccess!" + json.toString());
+                JSONArray jsonArray = json.jsonArray;
+                int end_pos = tweets.size() - 1;
+                try {
+                    List<Tweet> new_tweets = Tweet.fromJsonArray(jsonArray);
+                    tweets.addAll(new_tweets);
+                    adapter.notifyItemRangeInserted(end_pos, new_tweets.size());
+                } catch (JSONException e) {
+                    Log.e(TAG, "json exception", e);
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "onFailure!" + response, throwable);
+            }
+        });
+    }
+
+    public void populateHomeTimeline() {
+        client.getHomeTimeline( new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG, "onSuccess!" + json.toString());
@@ -214,10 +233,6 @@ public class TimelineActivity extends AppCompatActivity {
                 Log.e(TAG, "onFailure!" + response, throwable);
             }
         });
-    }
-
-    private void populateHomeTimeline(){
-        populateHomeTimelineByIndex(0);
     }
 
     /***

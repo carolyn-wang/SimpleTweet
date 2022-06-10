@@ -126,4 +126,9 @@ public class Tweet {
 
     public Integer getFavoriteCount(){return favoriteCount;};
 
+    public long getId(){
+        return Long.valueOf(id);
+    }
+
+
 }
