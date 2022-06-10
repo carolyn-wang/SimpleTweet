@@ -53,7 +53,6 @@ public class DetailFragment extends Fragment {
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
 
-
     public static DetailFragment newInstance(Tweet tweet ) {
         DetailFragment fragmentDemo = new DetailFragment();
         Bundle args = new Bundle();
