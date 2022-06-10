@@ -106,24 +106,24 @@ public class TimelineActivity extends AppCompatActivity {
         swipeContainer.setRefreshing(false);
     }
 
-    /**
-     * Inflates the menu
-     * Adds items to the action bar if it is present.
-     *
-     * @param menu
-     * @return Menu with all menu options
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+//    /**
+//     * Inflates the menu
+//     * Adds items to the action bar if it is present.
+//     *
+//     * @param menu
+//     * @return Menu with all menu options
+//     */
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
 
-    /***
-     * Handle presses on the action bar items
-     * @param item - menu item
-     */
+//    /***
+//     * Handle presses on the action bar items
+//     * @param item - menu item
+//     */
     /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -178,25 +178,16 @@ public class TimelineActivity extends AppCompatActivity {
         }
 
         /***
-         * Composes tweet
-         * @param v
+         * Composes tweet and refreshes timeline to show new tweet
+         * @param v View passed in by onClick call in xml file
          */
         public void composeTweet (View v){
             // Compose icon has been selected
-            Toast.makeText(this, "Composing message", Toast.LENGTH_SHORT).show();
-            // Navigate to the compose activity
-//            Intent intent = new Intent(this, ComposeActivity.class);
-            // Launches child activity (compose) & sends data back to parent
-//            startActivityForResult(intent, REQUEST_CODE); // TODO: deprecated
-            showEditDialog();
-
+            FragmentManager fm = getSupportFragmentManager();
+            ComposeFragment composeFragment = ComposeFragment.newInstance("new tweet");
+            composeFragment.show(fm, "fragment_compose");
+            fetchTimelineAsync();
         }
-
-    private void showEditDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        ComposeFragment composeFragment = ComposeFragment.newInstance("new tweet");
-        composeFragment.show(fm, "fragment_compose");
-    }
 
         public void logOut(View v){
 //        Intent intent = new Intent(this, LoginActivity.class);

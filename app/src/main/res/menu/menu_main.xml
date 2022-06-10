@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+        <!--TODO: delete menu_main-->
 
-<!--    <item-->
-<!--        android:id="@+id/compose"-->
-<!--        android:icon="@android:drawable/ic_menu_edit"-->
-<!--        android:title="Compose"-->
-<!--        app:showAsAction="always" />-->
-
+        <item
+            android:icon="@drawable/ic_vector_home_stroke"
+            app:showAsAction="always"
+            android:title="home" />
+        <item
+            android:icon="@drawable/ic_vector_search_stroke"
+            app:showAsAction="always"
+            android:title="search" />
+        <item
+            android:icon="@drawable/ic_vector_notifications_stroke"
+            app:showAsAction="always"
+            android:title="notifications"
+            />
+        <item
+            android:icon="@drawable/ic_vector_compose_dm"
+            app:showAsAction="always"
+            android:title="compose"
+            />
 </menu>

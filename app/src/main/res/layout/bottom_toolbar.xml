@@ -14,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary">
+
             <ImageView
                 android:src="@drawable/ic_vector_home_stroke"
                 android:layout_marginRight="30dp"
