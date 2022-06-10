@@ -57,7 +57,6 @@ public class DetailFragment extends Fragment {
     public static DetailFragment newInstance(Tweet tweet ) {
         DetailFragment fragmentDemo = new DetailFragment();
         Bundle args = new Bundle();
-        args.putString("strDetailTime", tweet.getRelativeTimeAgo());
         args.putString("strName", tweet.getUser().getName());
         args.putString("strScreenName", tweet.getUser().getScreenName());
         args.putString("strDetailProfileUrl", tweet.getUser().getProfileImageUrl());

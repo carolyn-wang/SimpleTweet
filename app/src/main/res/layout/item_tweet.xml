@@ -51,20 +51,18 @@
         android:id="@+id/tvBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:layout_below="@id/tvScreenName"
         android:layout_toEndOf="@id/ivProfileImage"
         android:text="tweet content" />
 
-<!--    TODO: fix gap above and below images-->
-
     <ImageView
         android:id="@+id/ivTweetImage"
+        android:foregroundGravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvBody"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="0dp"
+        android:adjustViewBounds="true"
         tools:srcCompat="@tools:sample/avatars" />
 
 </RelativeLayout>
