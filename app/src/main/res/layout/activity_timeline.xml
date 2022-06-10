@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:uiOptions="splitActionBarWhenNarrow"
     android:orientation="vertical">
 
     <include
         layout="@layout/top_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        android:minHeight="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways" />
 
-<!--    TODO: replace height with variable-->
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <!--    TODO: replace height with variable-->
+    <RelativeLayout
         android:id="@+id/scrollingTimeline"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="672dp"
-        android:layout_gravity="center_vertical">
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeContainer"
@@ -45,14 +46,16 @@
             android:id="@+id/compose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_vector_compose"
-            app:fabSize="normal"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="?attr/actionBarSize"
             android:onClick="composeTweet"
+            android:src="@drawable/ic_vector_compose"
+            android:tint="@android:color/white"
             app:backgroundTint="@color/twitter_blue"
-            android:tint="@android:color/white"/>
+            app:fabSize="normal" />
 
         <Button
             android:id="@+id/ivLogOutbutton"
@@ -60,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="?attr/actionBarSize"
             android:onClick="onLogout"
             android:text="Log Out"
             tools:ignore="OnClick" />
@@ -70,6 +74,7 @@
         layout="@layout/bottom_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom" />
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

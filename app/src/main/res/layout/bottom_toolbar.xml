@@ -2,9 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal">
-
+    android:layout_height="match_parent">
 
     <!--    TODO: fix formating here
         TODO: Figure out split toolbar-->
@@ -13,35 +11,37 @@
             android:minHeight="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary">
+            android:background="?attr/colorPrimary"
+            android:layout_marginHorizontal="10dp"
+            >
 
             <ImageView
                 android:src="@drawable/ic_vector_home_stroke"
-                android:layout_marginRight="30dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginHorizontal="30dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_gravity="left"
                 />
             <ImageView
                 android:src="@drawable/ic_vector_search_stroke"
-                android:layout_marginRight="30dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginHorizontal="30dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_gravity="left"
                 />
             <ImageView
                 android:src="@drawable/ic_vector_notifications_stroke"
-                android:layout_marginRight="30dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginHorizontal="30dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_gravity="right"
                 />
             <ImageView
                 android:src="@drawable/ic_vector_compose_dm"
-                android:layout_marginRight="30dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginHorizontal="30dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_gravity="right"
                 />
         </androidx.appcompat.widget.Toolbar>
 
