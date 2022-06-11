@@ -1,8 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Movie;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,8 +17,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-
-import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -75,6 +71,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageView ivTweetImage;
         ImageButton ibFavorite;
         TextView tvFavoriteCount;
+        final int ROUNDING_RADIUS = 90;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
@@ -95,10 +92,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvName.setText(tweet.user.name);
             tvScreenName.setText(tweet.user.screenName);
             tvFavoriteCount.setText(String.valueOf(tweet.favoriteCount));
-            Glide.with(context).load(tweet.user.profileImageUrl).transform(new RoundedCorners(90)).into(ivProfileImage);
-            if (tweet.imageUrl != ""){
-//                TODO: variable radius
-                Glide.with(context).load(tweet.imageUrl).transform(new RoundedCorners(90)).into(ivTweetImage);
+            Glide.with(context).load(tweet.user.profileImageUrl).transform(new RoundedCorners(ROUNDING_RADIUS)).into(ivProfileImage);
+            if (!tweet.imageUrl.equals("")){
+                Glide.with(context).load(tweet.imageUrl).transform(new RoundedCorners(ROUNDING_RADIUS)).into(ivTweetImage);
                 ivTweetImage.setVisibility(View.VISIBLE);
             }
             else{
@@ -121,8 +117,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                                 tweet.isFavorited = true;
                                 // increment the text inside tvFavoriteCount
                                 tweet.favoriteCount++;
-                                // TODO: figure out repetition and updating for favorite count
-                                tvFavoriteCount.setText(String.valueOf(tweet.favoriteCount));
+=                                tvFavoriteCount.setText(String.valueOf(tweet.favoriteCount));
                                 Log.i("FavoriteTweet", "favorited onSuccess");
                             }
 

@@ -28,7 +28,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_toRightOf="@+id/ivDetailProfileImage"
-        android:text="Name" />
+        android:text="@string/default_tvName" />
 
     <TextView
         android:id="@+id/tvDetailScreenName"
@@ -38,7 +38,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_toRightOf="@+id/ivDetailProfileImage"
-        android:text="Screen Name" />
+        android:text="@string/default_tvScreenName" />
 
 
     <TextView
@@ -48,7 +48,7 @@
         android:layout_below="@id/ivDetailProfileImage"
         android:autoLink="all"
         android:linksClickable="true"
-        android:text="tweet content" />
+        android:text="@string/default_tvBody" />
 
     <ImageView
         android:id="@+id/ivDetailTweetImage"
@@ -63,6 +63,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivDetailTweetImage"
-        android:text="Date" />
+        android:text="@string/default_tvTime" />
 
 </RelativeLayout>

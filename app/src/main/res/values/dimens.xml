@@ -11,5 +11,8 @@
 
 <!--    Bottom margin for LogOut and ComposeTweet buttons -->
     <dimen name="mainButtonsBottomMargin">70dp</dimen>
+    <dimen name="toolbarIcon">40dp</dimen>
+    <dimen name="toolbarIconSmall">30dp</dimen>
+    <dimen name="toolbarMargin">20dp</dimen>
 
 </resources>

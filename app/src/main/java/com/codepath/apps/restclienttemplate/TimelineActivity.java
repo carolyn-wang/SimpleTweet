@@ -32,10 +32,10 @@ public class TimelineActivity extends AppCompatActivity {
 
     public static final String TAG = "TimelineActivity";
     private final int REQUEST_CODE = 27;
-    TwitterClient client;
-    RecyclerView rvTweets;
-    List<Tweet> tweets;
-    TweetsAdapter adapter;
+    private TwitterClient client;
+    private RecyclerView rvTweets;
+    private List<Tweet> tweets;
+    private TweetsAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
     public static FragmentManager fragManager;
     private long lowestMaxId;
@@ -49,13 +49,12 @@ public class TimelineActivity extends AppCompatActivity {
         client = TwitterApp.getRestClient(this);
 
 
-        // TODO: clean up code here
         // Find the toolbar view and set as ActionBar
-        Toolbar topToolbar = (Toolbar) findViewById(R.id.topToolbar);
+        Toolbar topToolbar = findViewById(R.id.topToolbar);
         setSupportActionBar(topToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        Toolbar bottomToolbar = (Toolbar) findViewById(R.id.bottomToolbar);
+        Toolbar bottomToolbar = findViewById(R.id.bottomToolbar);
         setSupportActionBar(bottomToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -113,24 +112,26 @@ public class TimelineActivity extends AppCompatActivity {
         swipeContainer.setRefreshing(false);
     }
 
-//    /**
-//     * Inflates the menu
-//     * Adds items to the action bar if it is present.
-//     *
-//     * @param menu
-//     * @return Menu with all menu options
-//     */
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
+    /**
+     * Inflates the menu
+     * Adds items to the action bar if it is present.
+     *
+     * @param
+     * @return Menu with all menu options
+     */
+    /*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    /*
 
 
-//    /***
-//     * Handle presses on the action bar items
-//     * @param item - menu item
-//     */
+    /***
+     * Handle presses on the action bar items
+     * @param item - menu item
+     */
     /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

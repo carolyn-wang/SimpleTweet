@@ -8,5 +8,12 @@
 
     <string name="tweet">Tweet</string>
     <string name="maxTweetLength">200</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="default_tvTime">0 m</string>
+    <string name="default_tvName">Full Name</string>
+    <string name="default_tvScreenName">Screen Name</string>
+    <string name="default_tvBody">Tweet content</string>
+    <string name="default_tvFavoriteCount">0</string>
+    <string name="favoriteIconDesc">favoriteIcon</string>
+    <string name="etCompose">What\'s happening?</string>
+    <string name="logOutBtn">Log Out</string>
 </resources>

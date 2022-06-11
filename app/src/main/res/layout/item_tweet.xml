@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/ivProfileImage"
-        android:text="Posted x minutes ago"
+        android:text="@string/default_tvTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,14 +34,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Full Name"
+        android:text="@string/default_tvName"
         app:layout_constraintStart_toEndOf="@id/ivProfileImage" />
 
     <TextView
         android:id="@+id/tvScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Screen Name"
+        android:text="@string/default_tvScreenName"
         app:layout_constraintStart_toEndOf="@+id/tvName"
         tools:layout_editor_absoluteY="0dp" />
 
@@ -53,7 +53,7 @@
         android:layout_marginTop="8dp"
         android:autoLink="all"
         android:linksClickable="true"
-        android:text="tweet content"
+        android:text="@string/default_tvBody"
         app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
@@ -75,6 +75,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
+        android:contentDescription="@string/favoriteIconDesc"
         app:layout_constraintStart_toEndOf="@id/ivProfileImage"
         app:layout_constraintTop_toBottomOf="@id/ivTweetImage"
         app:srcCompat="@drawable/ic_vector_heart_stroke" />
@@ -84,7 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="0"
+        android:text="@string/default_tvFavoriteCount"
         app:layout_constraintStart_toEndOf="@+id/ibFavorite"
         app:layout_constraintTop_toTopOf="@+id/ibFavorite" />
 

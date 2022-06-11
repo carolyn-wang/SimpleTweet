@@ -21,7 +21,6 @@
         app:layout_scrollFlags="scroll|enterAlways" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!--    TODO: replace height with variable-->
     <RelativeLayout
         android:id="@+id/scrollingTimeline"
         android:layout_width="match_parent"
@@ -70,7 +69,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="@dimen/mainButtonsBottomMargin"
         android:onClick="onLogout"
-        android:text="Log Out"
+        android:text="@string/logOutBtn"
         tools:ignore="OnClick" />
 
     <include

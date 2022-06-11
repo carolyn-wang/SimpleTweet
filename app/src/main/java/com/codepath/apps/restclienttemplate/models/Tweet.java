@@ -69,7 +69,7 @@ public class Tweet {
         String url = "";
         try {
             JSONObject firstEntity = (JSONObject) jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0);
-            url = (String) firstEntity.getString("media_url_https");
+            url =  firstEntity.getString("media_url_https");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -118,7 +118,7 @@ public class Tweet {
         return imageUrl;
     }
 
-    public boolean isFavorited() {return isFavorited;};
+    public boolean isFavorited() {return isFavorited;}
 
     public long getId(){
         return Long.valueOf(id);
