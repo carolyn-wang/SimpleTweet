@@ -105,17 +105,13 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 @Override
                 public void onClick(View view) {
                     TwitterClient client = TwitterApp.getRestClient(context);
-                    // If not already favorited
                     if(!tweet.isFavorited()){
-                        // Tell Twitter I want to favorite this
                         client.favoriteTweet(tweet.id, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Headers headers, JSON json) {
-                                // Change drawable to filled in heart
                                 Drawable newHeart = context.getDrawable(R.drawable.ic_vector_heart);
                                 ibFavorite.setImageDrawable(newHeart);
                                 tweet.isFavorited = true;
-                                // increment the text inside tvFavoriteCount
                                 tweet.favoriteCount++;
                                 tvFavoriteCount.setText(String.valueOf(tweet.favoriteCount));
                                 Log.i("FavoriteTweet", "favorited onSuccess");

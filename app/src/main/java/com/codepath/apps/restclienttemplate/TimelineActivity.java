@@ -75,8 +75,6 @@ public class TimelineActivity extends AppCompatActivity {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to the bottom of the list
                 Tweet lastTweet = tweets.get(tweets.size() - 1);
                 lowestMaxId = lastTweet.getId();
                 loadMoreTimeline(lowestMaxId);
@@ -112,41 +110,6 @@ public class TimelineActivity extends AppCompatActivity {
         swipeContainer.setRefreshing(false);
     }
 
-    /**
-     * Inflates the menu
-     * Adds items to the action bar if it is present.
-     *
-     * @param
-     * @return Menu with all menu options
-     */
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    /*
-
-
-    /***
-     * Handle presses on the action bar items
-     * @param item - menu item
-     */
-    /*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.compose) {
-            // Compose icon has been selected
-            Toast.makeText(this, "Composing message", Toast.LENGTH_SHORT).show();
-            // Navigate to the compose activity
-            Intent intent = new Intent(this, ComposeActivity.class);
-            // Launches child activity (compose) & sends data back to parent
-            startActivityForResult(intent, REQUEST_CODE);
-            return true;
-        }
-            return super.onOptionsItemSelected(item);
-        }
-     */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
