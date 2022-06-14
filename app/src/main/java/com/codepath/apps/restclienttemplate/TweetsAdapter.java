@@ -117,7 +117,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                                 tweet.isFavorited = true;
                                 // increment the text inside tvFavoriteCount
                                 tweet.favoriteCount++;
-=                                tvFavoriteCount.setText(String.valueOf(tweet.favoriteCount));
+                                tvFavoriteCount.setText(String.valueOf(tweet.favoriteCount));
                                 Log.i("FavoriteTweet", "favorited onSuccess");
                             }
 
